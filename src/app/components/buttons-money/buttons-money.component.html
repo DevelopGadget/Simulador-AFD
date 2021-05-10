@@ -1,0 +1,7 @@
+<mat-card>
+  <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button *ngFor="let item of sharedService.coins | async">
+     {{item.Name}}
+    </button>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,20 @@
+.border {
+  border: solid 2px;
+}
+
+.item-product {
+  padding:3px;
+  border: solid 2px;
+  margin: 5px;
+  padding: 0px !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius:5px;
+  cursor: pointer;
+}
+
+.item-product-disabled {
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}

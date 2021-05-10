@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Simulador-AFD';
+
+  constructor(private readonly sharedService: SharedService) {
+    this.sharedService.loadCatalog();
+    this.sharedService.loadCoins();
+  }
+
 }
