@@ -6,4 +6,12 @@
     <app-buttons-money></app-buttons-money>
     <app-fabs-buttons></app-fabs-buttons>
   </div>
+  <div></div>
+  <ngx-graph
+    class="chart-container"
+    [view]="[800, 800]"
+    [showMiniMap]="true"
+    [links]="sharedService.edges"
+    [nodes]="sharedService.nodes">
+  </ngx-graph>
 </div>

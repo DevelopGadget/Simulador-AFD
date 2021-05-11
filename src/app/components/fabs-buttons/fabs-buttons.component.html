@@ -2,7 +2,7 @@
     <button mat-fab color="primary" [disabled]="!sharedService.isContainProduct">
         <mat-icon>done_all</mat-icon>
     </button>
-    <button mat-fab color="warn" [disabled]="!sharedService.isContainProduct">
+    <button mat-fab color="warn" [disabled]="!sharedService.isContainProduct" (click)="sharedService.clearListProduct()">
         <mat-icon>close</mat-icon>
     </button>
 </div>

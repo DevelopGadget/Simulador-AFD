@@ -15,6 +15,41 @@ export class SharedService {
 
   public coins:  BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
 
+  public edges = [
+    {
+      id: 'a',
+      source: '1',
+      target: '2'
+    },
+    {
+      id: 'b',
+      source: '1',
+      target: '3'
+    },
+    {
+      id: 'c',
+      source: '3',
+      target: '4'
+    },
+    {
+      id: 'd',
+      source: '3',
+      target: '5'
+    },
+    {
+      id: 'e',
+      source: '4',
+      target: '5'
+    },
+    {
+      id: 'f',
+      source: '2',
+      target: '3'
+    }
+  ];
+
+  public nodes = [];
+
   constructor(private readonly http: HttpClient) { }
 
   public loadCatalog() {
@@ -37,12 +72,26 @@ export class SharedService {
     this.selecteds.push(item);
     this.selectedItems.next(this.selecteds);
     this.valueTotal.next(this.valueTotal.value + item.Value);
+    this.getNodes();
   }
 
   public clearListProduct() {
     this.selecteds = [];
     this.selectedItems.next([]);
     this.valueTotal.next(0);
+  }
+
+  public getNodes() {
+    this.nodes = Array.from({length: (this.valueTotal.value - 0) / 101}, (_, i) => {
+      return {
+        id: `${i * 100}`,
+        label: '$ ${i * 100}'
+      }
+    });
+  }
+
+  public getEdges(){
+
   }
 
 }

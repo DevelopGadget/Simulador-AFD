@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FabsButtonsComponent } from './components/fabs-buttons/fabs-buttons.component';
 import { DisplayMoneyComponent } from './components/display-money/display-money.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const angularMaterial = [
   MatCardModule,
@@ -41,9 +43,11 @@ const angularMaterial = [
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    ...angularMaterial
+    ...angularMaterial,
+    NgxGraphModule
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
