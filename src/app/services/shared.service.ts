@@ -10,6 +10,7 @@ export class SharedService {
 
   public catalog: BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
   public selectedItems: BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
+  public valueTotal: BehaviorSubject<number> = new BehaviorSubject(0);
   public selecteds: Array<Catalog> =[];
 
   public coins:  BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
@@ -26,6 +27,22 @@ export class SharedService {
     this.http.get<Array<Catalog>>('assets/coins.json').subscribe(res => {
       this.coins.next(res);
     });
+  }
+
+  public get isDisabledProduct(): boolean {return this.selecteds.length >= 5}
+
+  public get isContainProduct(): boolean {return this.selecteds.length > 0}
+
+  public addProduct(item: Catalog) {
+    this.selecteds.push(item);
+    this.selectedItems.next(this.selecteds);
+    this.valueTotal.next(this.valueTotal.value + item.Value);
+  }
+
+  public clearListProduct() {
+    this.selecteds = [];
+    this.selectedItems.next([]);
+    this.valueTotal.next(0);
   }
 
 }

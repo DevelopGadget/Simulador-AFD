@@ -13,7 +13,17 @@ import { ListProductsComponent } from './components/list-products/list-products.
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FabsButtonsComponent } from './components/fabs-buttons/fabs-buttons.component';
+import { DisplayMoneyComponent } from './components/display-money/display-money.component';
+
+const angularMaterial = [
+  MatCardModule,
+  MatButtonModule,
+  MatIconModule,
+  MatDialogModule
+]
 
 @NgModule({
   declarations: [
@@ -22,7 +32,8 @@ import { FabsButtonsComponent } from './components/fabs-buttons/fabs-buttons.com
     InfoDialogComponent,
     ButtonsMoneyComponent,
     ListProductsComponent,
-    FabsButtonsComponent
+    FabsButtonsComponent,
+    DisplayMoneyComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +41,7 @@ import { FabsButtonsComponent } from './components/fabs-buttons/fabs-buttons.com
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    MatCardModule,
-    MatButtonModule
+    ...angularMaterial
   ],
   providers: [],
   bootstrap: [AppComponent]

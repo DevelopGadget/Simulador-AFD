@@ -9,20 +9,15 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class ListProductsComponent implements OnInit {
 
-  selectionProductDisabled: boolean = false;
-
   constructor(public readonly sharedService: SharedService) { }
 
   ngOnInit(): void {
   }
 
   onClickEvent(item: Catalog) {
-    const productCount = this.sharedService.selecteds.length;
-    this.selectionProductDisabled = productCount >= 5;
 
-    if(!this.selectionProductDisabled){
-      this.sharedService.selecteds.push(item);
-      this.sharedService.selectedItems.next(this.sharedService.selecteds);
+    if(!this.sharedService.isDisabledProduct){
+      this.sharedService.addProduct(item);
     } else {
       window.alert('Ya ha seleccionado 5 productos')
     }

@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-button *ngFor="let item of sharedService.coins | async">
+    <button mat-button *ngFor="let item of sharedService.coins | async" [disabled]="!sharedService.isContainProduct">
      {{item.Name}}
     </button>
   </mat-card-content>
