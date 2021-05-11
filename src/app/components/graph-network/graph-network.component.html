@@ -11,7 +11,7 @@
     <svg:g class="node">
       <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
         [attr.fill]="node.data.color" />
-      <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
+      <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2" >
         {{node.label}}
       </svg:text>
     </svg:g>
@@ -19,7 +19,7 @@
 
   <ng-template #linkTemplate let-link>
     <svg:g class="edge">
-      <svg:path class="line" stroke-width="2" marker-end="url(#arrow)" attr.fill="red"></svg:path>
+      <svg:path class="line" stroke-width="2" marker-end="url(#arrow)" [attr.stroke]="link.data.stroke"></svg:path>
       <svg:text class="edge-label" text-anchor="middle" >
         <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
           startOffset="50%">

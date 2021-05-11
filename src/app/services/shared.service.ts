@@ -13,6 +13,8 @@ export class SharedService {
   public valueTotal: BehaviorSubject<number> = new BehaviorSubject(0);
   public selecteds: Array<Catalog> =[];
 
+  public valueInputTotal: number = 0;
+
   public coins:  BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
 
   public edges: Array<Edge> = [];
@@ -53,8 +55,6 @@ export class SharedService {
     this.valueTotal.next(this.valueTotal.value + item.Value);
     this.getNodes();
     this.getEdges();
-    console.log(this.edges);
-    console.log(this.nodes);
   }
 
   public clearListProduct() {
@@ -88,10 +88,27 @@ export class SharedService {
           id: `id_${step}${index}`,
           source: `${item.id}`,
           target: `${Number.parseInt(item.id) + step}`,
-          label: `$${step}`
+          label: `$${step}`,
+          data: {stroke: 'black'}
         });
       }
     });
+  }
+
+  public inputCoin(value: number) {
+
+    if((this.valueInputTotal + value) > this.valueTotal.value) {
+      console.log('Esto excedeeeee');
+      return;
+    }
+
+    for (let item of this.edges) {
+      if(item.label === `$${value}` && item.source === `${this.valueInputTotal}`) {
+        item.data.stroke = 'red';
+        this.valueInputTotal += value;
+        break;
+      }
+    }
   }
 
 }
