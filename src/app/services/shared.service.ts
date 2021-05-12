@@ -90,7 +90,8 @@ export class SharedService {
     this.nodes = Array.from({ length: (this.valueTotal.value / 100) + 1 }, (_, i) => {
       return {
         id: `${i * 100}`,
-        label: `$${i * 100}`
+        label: `$${i * 100}`,
+        dimension: {height: 50, width: 60}
       }
     });
   }
