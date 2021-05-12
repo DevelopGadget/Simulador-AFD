@@ -1,1 +1,13 @@
-<p>info-dialog works!</p>
+<h1 matDialogTitle fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+  <mat-icon class="icon" [color]="data.IconColor">{{data.Icon}}</mat-icon>
+  <div>{{data.Title}}</div>
+</h1>
+
+<mat-dialog-content>
+    {{data.Message}}
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [matDialogClose]="false">Cerrar</button>
+    <button mat-raised-button color="primary" [matDialogClose]="true">Ok</button>
+</mat-dialog-actions>

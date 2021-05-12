@@ -3,4 +3,5 @@ export interface DialogData {
   Message?: string;
   IsConfirm: boolean;
   Icon: string;
+  IconColor: string;
 }
