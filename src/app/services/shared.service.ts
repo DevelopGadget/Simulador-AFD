@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Catalog } from '../models/catalog';
 import { Node, Edge } from '@swimlane/ngx-graph';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,19 @@ export class SharedService {
   public selectedItems: BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
   public valueTotal: BehaviorSubject<number> = new BehaviorSubject(0);
   public selecteds: Array<Catalog> = [];
+
+  panToNodeObservable: Subject<string> = new Subject<string>();
+
+  zoomToFit$: Subject<boolean> = new Subject();
+  center$: Subject<boolean> = new Subject();  
+
+  centerGraph(node: string) {
+    // update$.next(true);
+    // this.center$.next(true);
+    // this.zoomToFit$.next(true);
+    this.panToNodeObservable.next(node)
+  }
+  
 
   public matTableState: MatTableDataSource<TableState> = new MatTableDataSource([]);
 
@@ -41,7 +54,7 @@ export class SharedService {
     });
   }
 
-  public get isDisabledProduct(): boolean { return this.selecteds.length >= 5 }
+  public get isDisabledProduct(): boolean { return this.selecteds.length >= 5 || this.valueInputTotal > 0 }
 
   public get isContainProduct(): boolean { return this.selecteds.length > 0 }
 
@@ -53,7 +66,7 @@ export class SharedService {
     this.valueTotal.next(this.valueTotal.value + item.Value);
     this.getNodes();
     this.getEdges();
-    this.methodGenerateTableState();
+    this.methodGenerateTableState(); 
   }
 
   public clearListProduct() {
@@ -91,7 +104,7 @@ export class SharedService {
       return {
         id: `${i * 100}`,
         label: `$${i * 100}`,
-        dimension: {height: 50, width: 60}
+        dimension: { height: 50, width: 60 }
       }
     });
   }
@@ -106,6 +119,7 @@ export class SharedService {
 
   public getTableStateForStep(step: number) {
     this.nodes.forEach((item, index) => {
+      // console.log(item)
       if (Number.parseInt(item.id) + step <= this.valueTotal.value) {
         this.edges.push({
           id: `id_${step}${index}`,
@@ -118,8 +132,8 @@ export class SharedService {
     });
   }
 
-  public inputCoin(value: number) {
-
+  public inputCoin(value: number) {   
+   
     if ((this.valueInputTotal + value) > this.valueTotal.value) {
       this.dialog.open(InfoDialogComponent, {
         autoFocus: false,
@@ -138,6 +152,7 @@ export class SharedService {
       if (item.label === `$${value}` && item.source === `${this.valueInputTotal}`) {
         item.data.stroke = 'blue';
         this.valueInputTotal += value;
+        this.centerGraph(`${this.valueInputTotal}`);
         break;
       }
     }

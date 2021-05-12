@@ -16,10 +16,11 @@ export class ListProductsComponent implements OnInit {
 
   onClickEvent(item: Catalog) {
 
+    
     if(!this.sharedService.isDisabledProduct){
       this.sharedService.addProduct(item);
     } else {
-      window.alert('Ya ha seleccionado 5 productos')
+      // window.alert('Ya ha seleccionado 5 productos')
     }
 
     console.log({item})

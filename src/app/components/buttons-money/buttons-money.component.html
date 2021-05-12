@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card style="box-shadow: none !important;">
   <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-button *ngFor="let item of sharedService.coins | async" [disabled]="!sharedService.isContainProduct"
+    <button style="margin-right: 5px;" mat-stroked-button color="primary" *ngFor="let item of sharedService.coins | async" [disabled]="!sharedService.isContainProduct"
       (click)="sharedService.inputCoin(item.Value)">
       {{item.Name}}
     </button>
