@@ -5,6 +5,8 @@ import { Catalog } from '../models/catalog';
 import { Node, Edge } from '@swimlane/ngx-graph';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoDialogComponent } from '../components/info-dialog/info-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { TableState } from '../models/tableState';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,8 @@ export class SharedService {
   public selectedItems: BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
   public valueTotal: BehaviorSubject<number> = new BehaviorSubject(0);
   public selecteds: Array<Catalog> = [];
+
+  public matTableState: MatTableDataSource<TableState> = new MatTableDataSource([]);
 
   public valueInputTotal: number = 0;
 
@@ -49,6 +53,7 @@ export class SharedService {
     this.valueTotal.next(this.valueTotal.value + item.Value);
     this.getNodes();
     this.getEdges();
+    this.methodGenerateTableState();
   }
 
   public clearListProduct() {
@@ -65,15 +70,20 @@ export class SharedService {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.selecteds = [];
-        this.selectedItems.next([]);
-        this.valueTotal.next(0);
-        this.nodes = [];
-        this.edges = [];
-        this.valueInputTotal = 0;
+        this.clearAll();
       }
     });
 
+  }
+
+  public clearAll() {
+    this.selecteds = [];
+    this.selectedItems.next([]);
+    this.valueTotal.next(0);
+    this.nodes = [];
+    this.edges = [];
+    this.valueInputTotal = 0;
+    this.matTableState.connect().next([]);
   }
 
   public getNodes() {
@@ -91,7 +101,6 @@ export class SharedService {
     this.getTableStateForStep(200);
     this.getTableStateForStep(500);
     this.getTableStateForStep(1000);
-
   }
 
   public getTableStateForStep(step: number) {
@@ -158,14 +167,35 @@ export class SharedService {
       });
 
       dialogRef.afterClosed().subscribe(res => {
-        this.selecteds = [];
-        this.selectedItems.next([]);
-        this.valueTotal.next(0);
-        this.nodes = [];
-        this.edges = [];
-        this.valueInputTotal = 0;
+        this.clearAll();
       });
     }
+  }
+
+  public methodGenerateTableState() {
+    let table = [];
+    let [c1, c2, c3, c4] = [100, 200, 500, 1000];
+
+    const operationPrice = (operation: number) => {
+      return operation > this.valueTotal.value ? '' : operation;
+    };
+
+    for (let index = 0; index * 100 <= this.valueTotal.value; index++) {
+
+      let inputMoney = index * 100;
+
+      table.push({
+        Estado: inputMoney,
+        M100: operationPrice(inputMoney + c1),
+        M200: operationPrice(inputMoney + c2),
+        M500: operationPrice(inputMoney + c3),
+        M1000: operationPrice(inputMoney + c4),
+      });
+
+    }
+
+    this.matTableState.connect().next(table);
+
   }
 
 }

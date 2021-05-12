@@ -15,17 +15,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { FabsButtonsComponent } from './components/fabs-buttons/fabs-buttons.component';
 import { DisplayMoneyComponent } from './components/display-money/display-money.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GraphNetworkComponent } from './components/graph-network/graph-network.component';
+import { TableStateComponent } from './components/table-state/table-state.component';
 
 const angularMaterial = [
   MatCardModule,
   MatButtonModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule
 ]
 
 @NgModule({
@@ -37,7 +40,8 @@ const angularMaterial = [
     ListProductsComponent,
     FabsButtonsComponent,
     DisplayMoneyComponent,
-    GraphNetworkComponent
+    GraphNetworkComponent,
+    TableStateComponent
   ],
   imports: [
     BrowserModule,
