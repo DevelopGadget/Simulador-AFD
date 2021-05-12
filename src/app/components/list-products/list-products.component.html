@@ -1,6 +1,6 @@
-<div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px grid" class="border">
+<div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="10px grid">
 
-  <div fxFlex="30%" class="item-product" [ngClass]="{'item-product-disabled': sharedService.isDisabledProduct}" *ngFor="let item of sharedService.catalog | async"
+  <div fxFlex="30%" class="item-product mat-elevation-z4" [ngClass]="{'item-product-disabled': sharedService.isDisabledProduct}" *ngFor="let item of sharedService.catalog | async"
     (click)="onClickEvent(item)" fxLayoutAlign="space-between center" fxLayout="column">
       <img width="100%" [src]="item.ImgUrl" />
       <div>$ {{item.Value}}</div>

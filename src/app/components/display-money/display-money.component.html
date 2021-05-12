@@ -1,6 +1,14 @@
-<mat-card>
-  <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-    <mat-icon color="primary">shopping_cart</mat-icon>
-    <h1 style="font-weight: bold;">{{(sharedService.valueTotal | async)}}</h1>
-  </mat-card-content>
-</mat-card>
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <mat-card>
+    <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <mat-icon color="primary">shopping_cart</mat-icon>
+      <h1 style="font-weight: bold;">{{(sharedService.valueTotal | async)}}</h1>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <mat-icon color="primary">attach_money</mat-icon>
+      <h1 style="font-weight: bold;">{{sharedService.valueInputTotal}}</h1>
+    </mat-card-content>
+  </mat-card>
+</div>

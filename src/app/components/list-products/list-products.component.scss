@@ -12,6 +12,12 @@
   font-weight: 500;
   border-radius:5px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.item-product:hover {
+  border: solid 2px blue;
+  border-style: dotted;
 }
 
 .item-product-disabled {
