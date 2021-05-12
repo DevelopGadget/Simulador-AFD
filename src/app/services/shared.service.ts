@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Catalog } from '../models/catalog';
 import { Node, Edge } from '@swimlane/ngx-graph';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,12 @@ export class SharedService {
   public selectedItems: BehaviorSubject<Array<Catalog>> = new BehaviorSubject([]);
   public valueTotal: BehaviorSubject<number> = new BehaviorSubject(0);
   public selecteds: Array<Catalog> = [];
+
+  panToNodeObservable: Subject<string> = new Subject<string>();
+
+  centerGraph(node: string) {
+    this.panToNodeObservable.next(node)
+  }
 
   public matTableState: MatTableDataSource<TableState> = new MatTableDataSource([]);
 
@@ -91,7 +97,7 @@ export class SharedService {
       return {
         id: `${i * 100}`,
         label: `$${i * 100}`,
-        dimension: {height: 50, width: 60}
+        dimension: { height: 50, width: 60 }
       }
     });
   }
@@ -138,6 +144,7 @@ export class SharedService {
       if (item.label === `$${value}` && item.source === `${this.valueInputTotal}`) {
         item.data.stroke = 'red';
         this.valueInputTotal += value;
+        this.centerGraph(`${this.valueInputTotal}`);
         break;
       }
     }
