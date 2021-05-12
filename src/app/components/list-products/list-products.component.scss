@@ -1,17 +1,24 @@
 .border {
-  border: solid 2px;
+  // border: solid 2px;
 }
 
 .item-product {
   padding:3px;
-  border: solid 2px;
+  border: solid 1.5px rgba(10, 23, 199, 0.562);
   margin: 5px;
   padding: 0px !important;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  border-radius:5px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.item-product:hover {
+  border: dashed 1.5px rgba(216, 18, 18, 0.637);
+  margin-top: -2px;
+  margin-bottom: 10px;
 }
 
 .item-product-disabled {

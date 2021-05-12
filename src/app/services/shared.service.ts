@@ -136,7 +136,7 @@ export class SharedService {
 
     for (let item of this.edges) {
       if (item.label === `$${value}` && item.source === `${this.valueInputTotal}`) {
-        item.data.stroke = 'red';
+        item.data.stroke = 'blue';
         this.valueInputTotal += value;
         break;
       }
