@@ -47,7 +47,7 @@ export class SharedService {
     });
   }
 
-  public get isDisabledProduct(): boolean { return this.selecteds.length >= 5 }
+  public get isDisabledProduct(): boolean { return this.selecteds.length >= 5 || this.valueInputTotal > 0 }
 
   public get isContainProduct(): boolean { return this.selecteds.length > 0 }
 
@@ -125,7 +125,6 @@ export class SharedService {
   }
 
   public inputCoin(value: number) {
-
     if ((this.valueInputTotal + value) > this.valueTotal.value) {
       this.dialog.open(InfoDialogComponent, {
         autoFocus: false,
