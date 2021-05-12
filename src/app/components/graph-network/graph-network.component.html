@@ -1,5 +1,5 @@
 <ngx-graph *ngIf="sharedService.isShowChart" class="chart-container" [view]="[1200, 600]" [showMiniMap]="true"
-  [nodes]="sharedService.nodes" layout="dagreCluster" [links]="sharedService.edges">
+  [nodes]="sharedService.nodes" layout="dagreCluster" [links]="sharedService.edges" [autoZoom]="true" [autoCenter]="true">
 
   <ng-template #defsTemplate>
     <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
