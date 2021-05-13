@@ -20,15 +20,7 @@ export class SharedService {
   panToNodeObservable: Subject<string> = new Subject<string>();
 
   zoomToFit$: Subject<boolean> = new Subject();
-  center$: Subject<boolean> = new Subject();  
-
-  centerGraph(node: string) {
-    // update$.next(true);
-    // this.center$.next(true);
-    // this.zoomToFit$.next(true);
-    this.panToNodeObservable.next(node)
-  }
-  
+  center$: Subject<boolean> = new Subject();
 
   public matTableState: MatTableDataSource<TableState> = new MatTableDataSource([]);
 
@@ -65,8 +57,13 @@ export class SharedService {
     this.selectedItems.next(this.selecteds);
     this.valueTotal.next(this.valueTotal.value + item.Value);
     this.getNodes();
-    this.getEdges();
-    this.methodGenerateTableState(); 
+    this.getLinksForNodes();
+    this.methodGenerateTableState();
+    console.log('DEBUG DATA', {
+      nodos: this.nodes,
+      enlaces_de_nodos: this.edges,
+      productos_seleccionados: this.selecteds
+    })
   }
 
   public clearListProduct() {
@@ -77,7 +74,7 @@ export class SharedService {
       data: {
         Icon: 'help_outline',
         IconColor: 'primary',
-        Title: '¿Esta seguro que desea cancelar todo el proceso?',
+        Title: '¿Desea cancelar la compra?',
       }
     });
 
@@ -109,12 +106,24 @@ export class SharedService {
     });
   }
 
-  public getEdges() {
+  public restLinks() {
     this.edges = [];
-    this.getTableStateForStep(100);
-    this.getTableStateForStep(200);
-    this.getTableStateForStep(500);
-    this.getTableStateForStep(1000);
+  }
+
+  public followCoinNode(node: string) {
+    this.panToNodeObservable.next(node)
+  }
+
+  public getLinksForNodes() {
+    this.restLinks();
+    /**
+     * <> MONEDAS PERMITIDAS
+     * >< 100
+     * >< 200
+     * >< 500
+     * >< 1000
+     */
+    [100, 200, 500, 1000].forEach(coin => this.getTableStateForStep(coin))
   }
 
   public getTableStateForStep(step: number) {
@@ -132,19 +141,15 @@ export class SharedService {
     });
   }
 
-  public inputCoin(value: number) {   
-   
+  public addingCoin(value: number) {
+
     if ((this.valueInputTotal + value) > this.valueTotal.value) {
-      this.dialog.open(InfoDialogComponent, {
-        autoFocus: false,
-        disableClose: false,
-        data: {
-          Icon: 'cancel',
-          IconColor: 'warn',
-          Title: 'Se ha cancelado el ingreso',
-          Message: `El monto ingresado supera el valor total seran devueltos $${value} `
-        }
-      });
+      this.modalMessage({
+        Icon: 'cancel',
+        IconColor: 'warn',
+        Title: 'Se ha cancelado el ingreso de la moneda',
+        Message: `La moneda ingresado supera el valor total seran devueltos $${value} `
+      })
       return;
     }
 
@@ -152,33 +157,29 @@ export class SharedService {
       if (item.label === `$${value}` && item.source === `${this.valueInputTotal}`) {
         item.data.stroke = 'blue';
         this.valueInputTotal += value;
-        this.centerGraph(`${this.valueInputTotal}`);
+        this.followCoinNode(`${this.valueInputTotal}`);
         break;
       }
     }
   }
 
-  public finishTransaction() {
+  public endVendingMachine() {
     if (this.valueTotal.value !== this.valueInputTotal) {
-      this.dialog.open(InfoDialogComponent, {
-        autoFocus: false,
-        disableClose: false,
-        data: {
-          Icon: 'cancel',
-          IconColor: 'warn',
-          Title: 'Error',
-          Message: `El monto ingresado ($${this.valueInputTotal}) no coincide con el valor total ($${this.valueTotal.value})`
-        }
+      this.modalMessage({
+        Icon: 'cancel',
+        IconColor: 'error',
+        Title: 'Error',
+        Message: `El monto ingresado ($${this.valueInputTotal}) no coincide con el valor total ($${this.valueTotal.value})`
       });
     } else {
       const dialogRef = this.dialog.open(InfoDialogComponent, {
         autoFocus: false,
         disableClose: false,
         data: {
-          Icon: 'check_circle',
+          Icon: 'done',
           IconColor: 'primary',
-          Title: 'Gracias por tu compra',
-          Message: `Gracias por preferirnos que disfrutes tus productos :)`
+          Title: 'Compra Exitosa!',
+          Message: `Buen Provecho, no olvide lavar sus manos!`
         }
       });
 
@@ -210,8 +211,18 @@ export class SharedService {
 
     }
 
+    console.log('TABLA DE ESTADOS', table)
+
     this.matTableState.connect().next(table);
 
+  }
+
+  public modalMessage(data: any) {
+    this.dialog.open(InfoDialogComponent, {
+      autoFocus: false,
+      disableClose: false,
+      data
+    });
   }
 
 }

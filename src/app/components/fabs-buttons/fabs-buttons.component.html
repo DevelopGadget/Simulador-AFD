@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-    <button mat-raised-button color="primary" [disabled]="!sharedService.isContainProduct" (click)="sharedService.finishTransaction()">
+    <button mat-raised-button color="primary" [disabled]="!sharedService.isContainProduct" (click)="sharedService.endVendingMachine()">
         <mat-icon>storefront</mat-icon>
     </button>
     <button mat-raised-button color="warn" [disabled]="!sharedService.isContainProduct" (click)="sharedService.clearListProduct()">

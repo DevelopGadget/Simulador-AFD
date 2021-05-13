@@ -4,7 +4,7 @@
 
 .item-product {
   padding:3px;
-  border: solid 1.5px rgba(10, 23, 199, 0.562);
+  border: solid 2px rgba(10, 23, 199, 0.562);
   margin: 5px;
   padding: 0px !important;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -15,13 +15,13 @@
   transition: 0.3s;
 }
 
-.item-product:hover {
-  border: dashed 1.5px rgba(216, 18, 18, 0.637);
+.item-product:hover:not(.item-product-disabled) {
+  border: solid 2px rgb(22, 177, 87);
   margin-top: -2px;
   margin-bottom: 10px;
 }
 
 .item-product-disabled {
-  filter: grayscale(100%);
+  filter: grayscale(80%);
   cursor: not-allowed;
 }
